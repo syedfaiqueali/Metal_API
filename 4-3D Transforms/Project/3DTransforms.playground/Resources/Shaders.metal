@@ -7,10 +7,11 @@ struct VertexOut {
 };
 
 vertex VertexOut vertex_main(constant float3 *vertices [[ buffer(0) ]],
+                             constant float4x4 &matrix [[ buffer(1) ]],
                              uint id [[ vertex_id ]])
 {
     VertexOut vertex_out {
-        .position = float4(vertices[id],1),
+        .position = matrix * float4(vertices[id],1),
         .point_size = 20.0
     };
     return vertex_out;

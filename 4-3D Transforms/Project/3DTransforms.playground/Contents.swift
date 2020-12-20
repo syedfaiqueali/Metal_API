@@ -21,7 +21,13 @@ renderEncoder.setRenderPipelineState(pipelineState)
 
 //MARK:- Drawing code here
 //vertex position which is at the center of the screen
-var vertices = [float3(0,0,0.5)]
+var vertices: [float3] = [
+    [-0.7,  0.8, 1],
+    [-0.7, -0.4, 1],
+    [ 0.4,  0.2, 1]
+]
+
+var matrix = matrix_identity_float4x4
 
 //Create the Metal Buffer containing vertices
 let originalBuffer = device.makeBuffer(bytes: &vertices,
@@ -31,12 +37,19 @@ let originalBuffer = device.makeBuffer(bytes: &vertices,
 //Setup the Buffers for the vertex and fragment functions
 renderEncoder.setVertexBuffer(originalBuffer, offset: 0, index: 0)
 renderEncoder.setFragmentBytes(&lightGrayColor, length: MemoryLayout<float4>.stride, index: 0)
+renderEncoder.setVertexBytes(&matrix, length: MemoryLayout<float4x4>.stride, index: 1)
 
 //draw
-renderEncoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
 
-vertices[0].x += 0.3
-vertices[0].y -= 0.4
+let scaleX: Float = 1.2
+let scaleY: Float = 0.5
+matrix.columns.0 = [scaleX, 0, 0, 0]
+matrix.columns.1 = [0, scaleY, 0, 0]
+
+//sending matrix to the GPU
+renderEncoder.setVertexBytes(&matrix, length: MemoryLayout<float4x4>.stride, index: 1)
+
 var transformedBuffer = device.makeBuffer(bytes: &vertices, length: MemoryLayout<float3>.stride * vertices.count, options: [])
 
 //Setup the Buffers for the vertex and fragment functions
@@ -44,7 +57,7 @@ renderEncoder.setVertexBuffer(transformedBuffer, offset: 0, index: 0)
 renderEncoder.setFragmentBytes(&redColor, length: MemoryLayout<float4>.stride, index: 0)
 
 //draw
-renderEncoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
 
 
 renderEncoder.endEncoding()
