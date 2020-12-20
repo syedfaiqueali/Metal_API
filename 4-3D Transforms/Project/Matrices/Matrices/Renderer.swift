@@ -104,13 +104,34 @@ class Renderer: NSObject {
         //Set modelMatrix to hve translation of 0.3 units up and counter clockwise rotation of 45 degrees
         let translation = float4x4(translation: [0,0.3,0])
         //45 degree = 0.7853 radians
-        let rotation = float4x4(rotation: [0,0,0.7853])
+        let rotation = float4x4(rotation: [0,0.7853,0])
         uniforms.modelMatrix = translation * rotation
+        
+        uniforms.viewMatrix = float4x4(translation: [0.8, 0, 0]).inverse
+        
+        //Setup Projection Matrix
+        /*
+        let aspect = Float(metalView.bounds.width) / Float(metalView.bounds.height)
+        let projectionMatrix = float4x4(projectionFov: 0.7853,
+                                        near: 0.1,
+                                        far: 100,
+                                        aspect: aspect)
+        uniforms.projectionMatrix = projectionMatrix
+ */
+        //projection matrix updates everytime as we resize
+        mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
     }
 }
 
 extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+        let aspect = Float(view.bounds.width) / Float(view.bounds.height)
+        //70 deg = 1.22173 rad
+        let projectionMatrix = float4x4(projectionFov: 1.22173,
+                                        near: 0.001,
+                                        far: 100,
+                                        aspect: aspect)
+        uniforms.projectionMatrix = projectionMatrix
     }
     
     func draw(in view: MTKView) {
@@ -121,6 +142,15 @@ extension Renderer: MTKViewDelegate {
                 commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
             return
         }
+        
+        //Reset the camera & replace the translation matrix with a rotation around the y-axis.
+        /*
+        timer += 0.05
+        uniforms.viewMatrix = float4x4.identity()
+        uniforms.modelMatrix = float4x4(rotationY: sin(timer))
+ */
+        //Sends camera back into the scene by 3 units
+        uniforms.viewMatrix = float4x4(translation: [0,0,-3]).inverse
         
         //Set up uniform matrix values on swift side
         renderEncoder.setVertexBytes(&uniforms,

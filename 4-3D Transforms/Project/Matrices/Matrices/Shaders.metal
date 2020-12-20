@@ -41,7 +41,7 @@ struct VertexIn {
 
 vertex float4 vertex_main(const VertexIn vertexIn [[ stage_in ]],
                           constant Uniforms &uniforms [[ buffer(1) ]]) {
-    float4 position = uniforms.modelMatrix * vertexIn.position;
+    float4 position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * vertexIn.position;
     return position;
 }
 
