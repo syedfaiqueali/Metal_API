@@ -17,9 +17,7 @@ public func setupMetal() {
 public func createLibrary() -> MTLLibrary {
   var library: MTLLibrary?
   do {
-    let path = Bundle.main.path(forResource: "Shaders", ofType: "metal")
-    let source = try String(contentsOfFile: path!, encoding: .utf8)
-    library = try device.makeLibrary(source: source, options: nil)
+    library = device.makeDefaultLibrary()!
   } catch let error as NSError {
     fatalError("library error: " + error.description)
   }
