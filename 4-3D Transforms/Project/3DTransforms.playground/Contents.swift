@@ -43,14 +43,14 @@ renderEncoder.setVertexBytes(&matrix, length: MemoryLayout<float4x4>.stride, ind
 renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
 
 /*
- //Scaling
+ //MARK:- Scaling
 let scaleX: Float = 1.2
 let scaleY: Float = 0.5
 matrix.columns.0 = [scaleX, 0, 0, 0]
 matrix.columns.1 = [0, scaleY, 0, 0]
  */
 
-//Rotation
+//MARK:- Rotation
 let angle = Float.pi / 2.0   //same as 90 degree
 var distanceVector = float4(vertices.last!.x,
                             vertices.last!.y,
