@@ -42,10 +42,37 @@ renderEncoder.setVertexBytes(&matrix, length: MemoryLayout<float4x4>.stride, ind
 //draw
 renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
 
+/*
+ //Scaling
 let scaleX: Float = 1.2
 let scaleY: Float = 0.5
 matrix.columns.0 = [scaleX, 0, 0, 0]
 matrix.columns.1 = [0, scaleY, 0, 0]
+ */
+
+//Rotation
+let angle = Float.pi / 2.0   //same as 90 degree
+var distanceVector = float4(vertices.last!.x,
+                            vertices.last!.y,
+                            vertices.last!.z, 1)
+
+//setting 1 matrix for translation
+var translate = matrix_identity_float4x4
+translate.columns.3 = distanceVector
+
+//setting another matrix for rotation
+var rotate = matrix_identity_float4x4
+rotate.columns.0 = [cos(angle), -sin(angle), 0, 0]
+rotate.columns.1 = [sin(angle), cos(angle), 0, 0]
+
+//matrix.columns.0 = [cos(angle), -sin(angle), 0, 0]
+//matrix.columns.1 = [sin(angle), cos(angle), 0, 0]
+
+// Rotate triangle by 90 around world origin.
+//matrix = rotate * translate.inverse
+
+// Rotate triangle by 90 around right most triangle point.
+matrix = translate * rotate * translate.inverse
 
 //sending matrix to the GPU
 renderEncoder.setVertexBytes(&matrix, length: MemoryLayout<float4x4>.stride, index: 1)
