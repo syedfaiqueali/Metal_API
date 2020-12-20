@@ -17,7 +17,7 @@ guard let drawable = view.currentDrawable,
   let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
     fatalError()
 }
-renderEncoder.setRenderPipelineState(pipelineState)
+//renderEncoder.setRenderPipelineState(pipelineState)
 
 // drawing code here
 
