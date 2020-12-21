@@ -57,6 +57,18 @@ class Renderer: NSObject {
         return buildLightPipelineState()
     }()
     
+    //Sun directional light
+    lazy var sunlight: Light = {
+        var light = buildDefaultLight()
+        light.position = [1,2,-2]
+        return light
+    }()
+    
+    //To hold various lights
+    var lights: [Light] = []
+    
+    var fragmentUniforms = FragmentUniforms()
+    
     
     init(metalView: MTKView) {
         guard
@@ -87,6 +99,11 @@ class Renderer: NSObject {
         mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
         
         buildDepthStencilState()
+        
+        //adding sun to array of lights
+        lights.append(sunlight)
+        
+        fragmentUniforms.lightCount = UInt32(lights.count)
     }
     
     func buildDepthStencilState(){
@@ -97,6 +114,18 @@ class Renderer: NSObject {
         //3
         descriptor.isDepthWriteEnabled = true
         depthStencilState = Renderer.device.makeDepthStencilState(descriptor: descriptor)
+    }
+    
+    //For default light
+    func buildDefaultLight() -> Light {
+        var light = Light()
+        light.position = [0,0,0]
+        light.color = [1,1,1]
+        light.specularColor = [0.6,0.6,0.6]
+        light.intensity = 1
+        light.attenuation = float3(1,0,0)
+        light.type = Sunlight
+        return light
     }
 }
 
@@ -120,6 +149,9 @@ extension Renderer: MTKViewDelegate {
         uniforms.viewMatrix = camera.viewMatrix
         
         // render all the models in the array
+        // send array of lights to fragment function in buffer index and total count at index 3
+        renderEncoder.setFragmentBytes(&lights, length: MemoryLayout<Light>.stride * lights.count, index: 2)
+        renderEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, index: 3)
         for model in models {
             // model matrix now comes from the Model's superclass: Node
             uniforms.modelMatrix = model.modelMatrix

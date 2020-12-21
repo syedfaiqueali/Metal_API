@@ -58,4 +58,9 @@ typedef struct {
     LightType type;
 } Light;
 
+typedef struct {
+    uint lightCount;
+    vector_float3 cameraPosition;
+}FragmentUniforms;
+
 #endif /* Common_h */
