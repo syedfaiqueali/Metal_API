@@ -105,6 +105,11 @@ class Renderer: NSObject {
         train.rotation = [0, Float(45).degreesToRadians, 0]
         models.append(train)
         
+        //Adding tree
+        let fir = Model(name: "treefir.obj")
+        fir.position = [1.4, 0 ,0]
+        models.append(fir)
+        
         mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
         
         buildDepthStencilState()
@@ -153,7 +158,13 @@ extension Renderer: MTKViewDelegate {
             return
         }
         
+        models[0].rotation.y += 0.01
+        models[1].rotation.y += 0.01
+        
         renderEncoder.setDepthStencilState(depthStencilState)
+        
+        //camera.position already in the world space
+        fragmentUniforms.cameraPosition = camera.position
         
         uniforms.projectionMatrix = camera.projectionMatrix
         uniforms.viewMatrix = camera.viewMatrix
