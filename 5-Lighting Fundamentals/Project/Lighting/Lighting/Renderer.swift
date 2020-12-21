@@ -78,6 +78,15 @@ class Renderer: NSObject {
         return light
     }()
     
+    //Point light property
+    lazy var redLight: Light = {
+        var light = buildDefaultLight()
+        light.position = [-0, 0.5, -0.5]
+        light.color = [1,0,0]
+        light.attenuation = float3(1,3,4)
+        light.type = Pointlight
+        return light
+    }()
     
     init(metalView: MTKView) {
         guard
@@ -117,6 +126,7 @@ class Renderer: NSObject {
         //adding sun to array of lights
         lights.append(sunlight)
         lights.append(ambientLight)
+        lights.append(redLight)
         
         fragmentUniforms.lightCount = UInt32(lights.count)
     }
@@ -158,8 +168,9 @@ extension Renderer: MTKViewDelegate {
             return
         }
         
-        models[0].rotation.y += 0.01
-        models[1].rotation.y += 0.01
+        //Model Rotation
+        //models[0].rotation.y += 0.01
+        //models[1].rotation.y += 0.01
         
         renderEncoder.setDepthStencilState(depthStencilState)
         
@@ -200,7 +211,7 @@ extension Renderer: MTKViewDelegate {
             }
         }
         
-        debugLights(renderEncoder: renderEncoder, lightType: Sunlight)
+        debugLights(renderEncoder: renderEncoder, lightType: Pointlight)
         
         renderEncoder.endEncoding()
         guard let drawable = view.currentDrawable else {
