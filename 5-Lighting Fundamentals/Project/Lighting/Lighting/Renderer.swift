@@ -69,6 +69,15 @@ class Renderer: NSObject {
     
     var fragmentUniforms = FragmentUniforms()
     
+    //Bright green color, toned down to 10% intensity
+    lazy var ambientLight: Light = {
+        var light = buildDefaultLight()
+        light.color = [0.5,1,0]
+        light.intensity = 0.1
+        light.type = Ambientlight
+        return light
+    }()
+    
     
     init(metalView: MTKView) {
         guard
@@ -102,6 +111,7 @@ class Renderer: NSObject {
         
         //adding sun to array of lights
         lights.append(sunlight)
+        lights.append(ambientLight)
         
         fragmentUniforms.lightCount = UInt32(lights.count)
     }
@@ -153,6 +163,8 @@ extension Renderer: MTKViewDelegate {
         renderEncoder.setFragmentBytes(&lights, length: MemoryLayout<Light>.stride * lights.count, index: 2)
         renderEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, index: 3)
         for model in models {
+            //create a normal matrix
+            uniforms.normalMatrix = float3x3(normalFrom4x4: model.modelMatrix)
             // model matrix now comes from the Model's superclass: Node
             uniforms.modelMatrix = model.modelMatrix
             
@@ -176,6 +188,8 @@ extension Renderer: MTKViewDelegate {
                 }
             }
         }
+        
+        debugLights(renderEncoder: renderEncoder, lightType: Sunlight)
         
         renderEncoder.endEncoding()
         guard let drawable = view.currentDrawable else {
