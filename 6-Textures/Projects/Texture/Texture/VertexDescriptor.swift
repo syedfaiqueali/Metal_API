@@ -54,8 +54,14 @@ extension MDLVertexDescriptor {
     offset += MemoryLayout<float3>.stride
 
     // add the uv attribute here
+    //Want to read in 2 float for the texture coord. at an offset of 24bytes
+    vertexDescriptor.attributes[Int(UV.rawValue)] = MDLVertexAttribute(
+        name: MDLVertexAttributeTextureCoordinate,
+        format: .float2,
+        offset: 24,
+        bufferIndex: 0)
     
-    vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: offset)
+    vertexDescriptor.layouts[0] = MDLVertexBufferLayout(stride: 32)
     return vertexDescriptor
   }()
 }
