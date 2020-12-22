@@ -58,6 +58,8 @@
 		13EBBB4022C6FDA500230D2B /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBB3E22C6FDA500230D2B /* Lighting.swift */; };
 		3448E83025925433000FBC9C /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448E82F25925433000FBC9C /* Texturable.swift */; };
 		3448E83125925433000FBC9C /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448E82F25925433000FBC9C /* Texturable.swift */; };
+		3466B0EA25927A1B0050AA1E /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3466B0E925927A1B0050AA1E /* Textures.xcassets */; };
+		3466B0EB25927A1B0050AA1E /* Textures.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3466B0E925927A1B0050AA1E /* Textures.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +99,7 @@
 		13EBBB2D22C6FAF200230D2B /* lowpoly-barn-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowpoly-barn-color.png"; sourceTree = "<group>"; };
 		13EBBB3E22C6FDA500230D2B /* Lighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lighting.swift; sourceTree = "<group>"; };
 		3448E82F25925433000FBC9C /* Texturable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texturable.swift; sourceTree = "<group>"; };
+		3466B0E925927A1B0050AA1E /* Textures.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Textures.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,7 @@
 				13EBBB3E22C6FDA500230D2B /* Lighting.swift */,
 				13A7ABC722C2374C00609310 /* Utility */,
 				1384A39622C1DFC2006036BA /* Models */,
+				3466B0E925927A1B0050AA1E /* Textures.xcassets */,
 				1384A37422C1B389006036BA /* Assets.xcassets */,
 			);
 			path = Texture;
@@ -319,6 +323,7 @@
 				13EBBB3622C6FAF200230D2B /* lowpoly-house.obj in Resources */,
 				13EBBB2E22C6FAF200230D2B /* plane.obj in Resources */,
 				13EBBB3222C6FAF200230D2B /* ground.png in Resources */,
+				3466B0EA25927A1B0050AA1E /* Textures.xcassets in Resources */,
 				13697C4922C849B900B2C077 /* barn-ground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +341,7 @@
 				1384A3E822C1F04D006036BA /* LaunchScreen.storyboard in Resources */,
 				1384A3E522C1F04D006036BA /* Assets.xcassets in Resources */,
 				13EBBB3122C6FAF200230D2B /* plane.mtl in Resources */,
+				3466B0EB25927A1B0050AA1E /* Textures.xcassets in Resources */,
 				13EBBB2F22C6FAF200230D2B /* plane.obj in Resources */,
 				1384A3E322C1F04B006036BA /* Main.storyboard in Resources */,
 			);
