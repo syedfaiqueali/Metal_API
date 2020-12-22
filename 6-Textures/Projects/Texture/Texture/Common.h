@@ -81,4 +81,8 @@ typedef enum {
     BufferIndexFragmentUniforms = 3
 } BufferIndices;
 
+typedef enum{
+    BaseColorTexture = 0
+} Textures;
+
 #endif /* Common_h */
