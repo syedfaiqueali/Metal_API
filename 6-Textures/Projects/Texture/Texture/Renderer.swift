@@ -71,11 +71,19 @@ class Renderer: NSObject {
         metalView.delegate = self
         mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
         
-        // models
+        //Adding Models
+        //1- House
         let house = Model(name: "lowpoly-house.obj")
         house.position = [0, 0, 0]
         house.rotation = [0, Float(45).degreesToRadians, 0]
         models.append(house)
+        
+        //2- Plane
+        let ground = Model(name: "plane.obj")
+        ground.scale = [40,40,40]
+        ground.tiling = 16
+        models.append(ground)
+        
         
         fragmentUniforms.lightCount = lighting.count
     }
@@ -125,6 +133,10 @@ extension Renderer: MTKViewDelegate {
         for model in models {
             
             // add tiling here
+            fragmentUniforms.tiling = model.tiling
+            renderEncoder.setFragmentBytes(&fragmentUniforms,
+                                           length: MemoryLayout<FragmentUniforms>.stride,
+                                           index: Int(BufferIndexFragmentUniforms.rawValue))
             
             uniforms.modelMatrix = model.modelMatrix
             uniforms.normalMatrix = uniforms.modelMatrix.upperLeft

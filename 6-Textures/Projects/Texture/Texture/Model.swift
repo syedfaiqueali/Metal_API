@@ -35,6 +35,8 @@ class Model: Node {
     
     let pipelineState: MTLRenderPipelineState
     let meshes: [Mesh]
+    //Adding a tiling property
+    var tiling: UInt32 = 1
     
     init(name: String) {
         guard
