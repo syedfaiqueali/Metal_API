@@ -37,6 +37,8 @@ class Model: Node {
     let meshes: [Mesh]
     //Adding a tiling property
     var tiling: UInt32 = 1
+    //Sampler state
+    let samplerState: MTLSamplerState?
     
     init(name: String) {
         guard
@@ -53,8 +55,21 @@ class Model: Node {
             Mesh(mdlMesh: $0.0, mtkMesh: $0.1)
         }
         pipelineState = Model.buildPipelineState()
+        samplerState = Model.buildSamplerState()
+        
         super.init()
         self.name = name
+    }
+    
+    private static func buildSamplerState() -> MTLSamplerState? {
+        let descriptor = MTLSamplerDescriptor()
+        descriptor.sAddressMode = .repeat
+        descriptor.tAddressMode = .repeat
+        //descriptor.mipFilter = .linear
+        //descriptor.maxAnisotropy = 8
+        let samplerState =
+            Renderer.device.makeSamplerState(descriptor: descriptor)
+        return samplerState
     }
     
     private static func buildPipelineState() -> MTLRenderPipelineState {

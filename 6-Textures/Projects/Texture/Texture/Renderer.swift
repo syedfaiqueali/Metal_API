@@ -137,6 +137,7 @@ extension Renderer: MTKViewDelegate {
             renderEncoder.setFragmentBytes(&fragmentUniforms,
                                            length: MemoryLayout<FragmentUniforms>.stride,
                                            index: Int(BufferIndexFragmentUniforms.rawValue))
+            renderEncoder.setFragmentSamplerState(model.samplerState, index: 0)
             
             uniforms.modelMatrix = model.modelMatrix
             uniforms.normalMatrix = uniforms.modelMatrix.upperLeft
