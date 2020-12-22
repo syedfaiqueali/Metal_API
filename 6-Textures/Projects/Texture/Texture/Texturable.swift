@@ -31,36 +31,37 @@
 
 import MetalKit
 
-class Submesh {
-    var mtkSubmesh: MTKSubmesh
-    
-    struct Textures {
-        let baseColor: MTLTexture?
-    }
-    
-    let textures: Textures
-    
-    init(mdlSubmesh: MDLSubmesh, mtkSubmesh: MTKSubmesh) {
-        self.mtkSubmesh = mtkSubmesh
-        textures = Textures(material: mdlSubmesh.material)
-    }
-}
+protocol Texturable {}
 
-extension Submesh: Texturable {}
-
-private extension Submesh.Textures {
-    init(material: MDLMaterial?) {
-        /**Looks up provided property in the submesh's material, finds filename string value of property and returns a texture if there is one.*/
-        func property(with semantic: MDLMaterialSemantic) -> MTLTexture? {
-            guard let property = material?.property(with: semantic),
-                  property.type == .string,
-                  let filename = property.stringValue,
-                  let texture = try? Submesh.loadTexture(imageName: filename)
-            else {
-                return nil
-            }
-            return texture
+extension Texturable {
+    static func loadTexture(imageName: String) throws -> MTLTexture? {
+        //1 - for loading textures
+        let textureLoader = MTKTextureLoader(device: Renderer.device)
+        
+        //2 - Ensuring that texture loads with the origin at bottom-left(If dont, the texture will be flipped)
+        let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
+            [.origin: MTKTextureLoader.Origin.bottomLeft,
+             .SRGB: false,
+             .generateMipmaps: NSNumber(booleanLiteral: true)]
+        
+        //3 - Provide a default extension for the image name
+        let fileExtension =
+            URL(fileURLWithPath: imageName).pathExtension.isEmpty ?
+            "png" : nil
+        
+        //4 - Create new MTLTexture using provided image and loader options and return created texture
+        guard let url = Bundle.main.url(forResource: imageName,
+                                        withExtension: fileExtension)
+        else {
+            print("Failed to load \(imageName)\n - loading from Assets Catalog")
+            return try textureLoader.newTexture(name: imageName,
+                                                scaleFactor: 1.0,
+                                                bundle: Bundle.main, options: nil)
         }
-        baseColor = property(with: MDLMaterialSemantic.baseColor)
+        
+        let texture = try textureLoader.newTexture(URL: url,
+                                                   options: textureLoaderOptions)
+        print("loaded texture: \(url.lastPathComponent)")
+        return texture
     }
 }

@@ -56,6 +56,8 @@
 		13EBBB3D22C6FAF200230D2B /* lowpoly-barn-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 13EBBB2D22C6FAF200230D2B /* lowpoly-barn-color.png */; };
 		13EBBB3F22C6FDA500230D2B /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBB3E22C6FDA500230D2B /* Lighting.swift */; };
 		13EBBB4022C6FDA500230D2B /* Lighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EBBB3E22C6FDA500230D2B /* Lighting.swift */; };
+		3448E83025925433000FBC9C /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448E82F25925433000FBC9C /* Texturable.swift */; };
+		3448E83125925433000FBC9C /* Texturable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448E82F25925433000FBC9C /* Texturable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,7 @@
 		13EBBB2A22C6FAF200230D2B /* lowpoly-house.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "lowpoly-house.mtl"; sourceTree = "<group>"; };
 		13EBBB2D22C6FAF200230D2B /* lowpoly-barn-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowpoly-barn-color.png"; sourceTree = "<group>"; };
 		13EBBB3E22C6FDA500230D2B /* Lighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lighting.swift; sourceTree = "<group>"; };
+		3448E82F25925433000FBC9C /* Texturable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texturable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +142,7 @@
 				1384A38022C1B3C2006036BA /* ViewController.swift */,
 				1384A38822C1B53E006036BA /* Renderer.swift */,
 				1384A38C22C1BE70006036BA /* Shaders.metal */,
+				3448E82F25925433000FBC9C /* Texturable.swift */,
 				1384A38A22C1BA95006036BA /* Primitive.swift */,
 				1343BA5622C2DB1B007EA044 /* Common.h */,
 				130F080B22C4343D001B7909 /* Node.swift */,
@@ -348,6 +352,7 @@
 				130F081222C4352D001B7909 /* Model.swift in Sources */,
 				13EBBB3F22C6FDA500230D2B /* Lighting.swift in Sources */,
 				130F081B22C436F9001B7909 /* VertexDescriptor.swift in Sources */,
+				3448E83025925433000FBC9C /* Texturable.swift in Sources */,
 				130F082A22C43C57001B7909 /* ViewControllerExtension.swift in Sources */,
 				130F080F22C434CF001B7909 /* Camera.swift in Sources */,
 				1384A38122C1B3C2006036BA /* ViewController.swift in Sources */,
@@ -369,6 +374,7 @@
 				130F081322C4352D001B7909 /* Model.swift in Sources */,
 				13EBBB4022C6FDA500230D2B /* Lighting.swift in Sources */,
 				130F081C22C436F9001B7909 /* VertexDescriptor.swift in Sources */,
+				3448E83125925433000FBC9C /* Texturable.swift in Sources */,
 				130F081022C434CF001B7909 /* Camera.swift in Sources */,
 				1384A3F122C1F12C006036BA /* Shaders.metal in Sources */,
 				1384A3EE22C1F0A7006036BA /* LocalClasses.swift in Sources */,
