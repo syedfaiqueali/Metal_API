@@ -41,7 +41,8 @@ extension Texturable {
         //2 - Ensuring that texture loads with the origin at bottom-left(If dont, the texture will be flipped)
         let textureLoaderOptions: [MTKTextureLoader.Option: Any] =
             [.origin: MTKTextureLoader.Origin.bottomLeft,
-             .SRGB: false]
+             .SRGB: false,
+             .generateMipmaps: NSNumber(booleanLiteral: true)]
         
         //3 - Provide a default extension for the image name
         let fileExtension =
