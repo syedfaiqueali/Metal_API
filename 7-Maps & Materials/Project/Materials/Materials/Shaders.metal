@@ -37,6 +37,8 @@ using namespace metal;
 struct VertexIn {
     float4 position [[attribute(Position)]];
     float3 normal [[attribute(Normal)]];
+    float3 tangent [[attribute(Tangent)]];
+    float3 bitangent [[attribute(Bitangent)]];
     float2 uv [[attribute(UV)]];
 };
 
@@ -44,6 +46,8 @@ struct VertexOut {
     float4 position [[position]];
     float3 worldPosition;
     float3 worldNormal;
+    float3 worldTangent;
+    float3 worldBitangent;
     float2 uv;
 };
 
@@ -55,6 +59,8 @@ vertex VertexOut vertex_main(const VertexIn vertexIn [[stage_in]],
         * uniforms.modelMatrix * vertexIn.position,
         .worldPosition = (uniforms.modelMatrix * vertexIn.position).xyz,
         .worldNormal = uniforms.normalMatrix * vertexIn.normal,
+        .worldTangent = uniforms.normalMatrix * vertexIn.tangent,
+        .worldBitangent = uniforms.normalMatrix * vertexIn.bitangent,
         .uv = vertexIn.uv
     };
     return out;
