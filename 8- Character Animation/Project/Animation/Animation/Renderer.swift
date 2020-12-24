@@ -48,6 +48,9 @@ class Renderer: NSObject {
     //animation using physics
     var ballVeclocity: Float = 0
     
+    //For squash and stretch
+    var maxVelocity: Float = 0
+    
     lazy var camera: Camera = {
         let camera = ArcballCamera()
         camera.distance = 3
@@ -166,11 +169,29 @@ extension Renderer: MTKViewDelegate {
          ball's center is 0.35 units above the ground, that's when you reverse the
          velocity and travel upward.*/
         ballVeclocity += (acceleration * timeStep) / airFriction
+        maxVelocity = max(maxVelocity, abs(ballVeclocity))
+        
         ball.position.y -= ballVeclocity * timeStep
         
         if ball.position.y <= ball.size.y/2 {  //collision with ground
             ball.position.y = ball.size.y/2
             ballVeclocity = ballVeclocity * -1 * bounciness
+            
+            //depending on ball's velocity, squash the ball on y-axis & to maintain mass of ball expand ball on x and z axis
+            ball.scale.y = max(0.5, 1 - 0.8 * abs(ballVeclocity) / maxVelocity)
+            ball.scale.z = 1 + (1 - ball.scale.y) / 2
+            ball.scale.x = ball.scale.z
+        }
+        
+        //After hitting, when ball head's back up, increase size again
+        if ball.scale.y < 1{
+            let change: Float = 0.07
+            ball.scale.y += change
+            ball.scale.z -= change / 2
+            ball.scale.x = ball.scale.z
+            if ball.scale.y > 1 {
+                ball.scale = [1,1,1]
+            }
         }
     }
 }
