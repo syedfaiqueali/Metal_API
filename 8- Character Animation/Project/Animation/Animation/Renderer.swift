@@ -162,13 +162,14 @@ extension Renderer: MTKViewDelegate {
         let timeStep: Float = 1/600
         
         /**Calculate the position of the ball based on the ball's cuurent velocity.
-           The ball's origin is in the center, approx 0.7 units in diameter, so when
-           ball's center is 0.35 units above the ground, that's when you reverse the
-           velocity and travel upward.*/
+         The ball's origin is in the center, approx 0.7 units in diameter, so when
+         ball's center is 0.35 units above the ground, that's when you reverse the
+         velocity and travel upward.*/
         ballVeclocity += (acceleration * timeStep) / airFriction
         ball.position.y -= ballVeclocity * timeStep
-        if ball.position.y <= 0.35 {  //collision with ground
-            ball.position.y = 0.35
+        
+        if ball.position.y <= ball.size.y/2 {  //collision with ground
+            ball.position.y = ball.size.y/2
             ballVeclocity = ballVeclocity * -1 * bounciness
         }
     }
