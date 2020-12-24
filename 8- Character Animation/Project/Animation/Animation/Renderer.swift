@@ -156,6 +156,18 @@ extension Renderer: MTKViewDelegate {
     func update(deltaTime: Float) {
         currentTime += deltaTime * 4
         let ball = models[0]
+        let animation = Animation()
+        animation.translations = generateBallTranslations()
+        ball.position = animation.getTranslation(time: currentTime) ?? [0,0,0]
+        ball.position.y += ball.size.y
+        
+        //calculate current frame working on a 60fps
+        let fps = Float(60)
+        let currentFrame = Int(currentTime * fps) % (ballPositionXArray.count)
+        ball.position.x = ballPositionXArray[currentFrame]
+        
+        /*
+        let ball = models[0]
         //ball.position.x = sin(currentTime)
         let gravity: Float = 9.8
         let mass: Float = 0.05
@@ -193,5 +205,6 @@ extension Renderer: MTKViewDelegate {
                 ball.scale = [1,1,1]
             }
         }
+ */
     }
 }

@@ -56,6 +56,8 @@
 		13EE981422CACEF300D6065F /* ground.obj in Resources */ = {isa = PBXBuildFile; fileRef = 13EE980D22CACEF300D6065F /* ground.obj */; };
 		13EE981522CACEF300D6065F /* ground.obj in Resources */ = {isa = PBXBuildFile; fileRef = 13EE980D22CACEF300D6065F /* ground.obj */; };
 		13EF5AE422CC391400696D69 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EF5AE322CC391400696D69 /* Renderable.swift */; };
+		34C6859D25950C3A00686D5D /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6859C25950C3A00686D5D /* Animation.swift */; };
+		34C6859E25950C3A00686D5D /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6859C25950C3A00686D5D /* Animation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +99,7 @@
 		13EE980C22CACEF300D6065F /* ground.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.mtl; sourceTree = "<group>"; };
 		13EE980D22CACEF300D6065F /* ground.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ground.obj; sourceTree = "<group>"; };
 		13EF5AE322CC391400696D69 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
+		34C6859C25950C3A00686D5D /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,7 @@
 				130F080E22C434CF001B7909 /* Camera.swift */,
 				13EBBB3E22C6FDA500230D2B /* Lighting.swift */,
 				139D235222C851DC00C6DB03 /* Texturable.swift */,
+				34C6859C25950C3A00686D5D /* Animation.swift */,
 				139D235522C86C1E00C6DB03 /* Textures.xcassets */,
 				1384A39622C1DFC2006036BA /* Models */,
 				1384A37422C1B389006036BA /* Assets.xcassets */,
@@ -374,6 +378,7 @@
 				1384A38922C1B53E006036BA /* Renderer.swift in Sources */,
 				130F081522C43563001B7909 /* Mesh.swift in Sources */,
 				1384A37322C1B388006036BA /* LocalClasses.swift in Sources */,
+				34C6859D25950C3A00686D5D /* Animation.swift in Sources */,
 				1384A38D22C1BE70006036BA /* Shaders.metal in Sources */,
 				13A7ABC522C2374400609310 /* MathLibrary.swift in Sources */,
 				130F080C22C4343D001B7909 /* Node.swift in Sources */,
@@ -398,6 +403,7 @@
 				1384A3EF22C1F11D006036BA /* ViewController.swift in Sources */,
 				1384A3F022C1F12A006036BA /* Renderer.swift in Sources */,
 				130F082D22C43CC8001B7909 /* ViewControllerExtension.swift in Sources */,
+				34C6859E25950C3A00686D5D /* Animation.swift in Sources */,
 				1332655E22D16C69005DDC09 /* BallAnimations.swift in Sources */,
 				13A7ABC622C2374400609310 /* MathLibrary.swift in Sources */,
 				130F080D22C4343D001B7909 /* Node.swift in Sources */,
