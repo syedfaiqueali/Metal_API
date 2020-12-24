@@ -74,7 +74,7 @@ class Renderer: NSObject {
         mtkView(metalView, drawableSizeWillChange: metalView.bounds.size)
         
         // models
-        let house = Model(name: "cottage1.obj")
+        let house = Model(name: "cottage2.obj")
         house.position = [0, 0, 0]
         house.rotation = [0, Float(50).degreesToRadians, 0]
         models.append(house)
@@ -161,6 +161,8 @@ extension Renderer: MTKViewDelegate {
                                                      index: Int(NormalTexture.rawValue))
                     
                     // set the materials here
+                    var materail = submesh.material
+                    renderEncoder.setFragmentBytes(&materail, length: MemoryLayout<Material>.stride, index: Int(BufferIndexMaterials.rawValue))
                     
                     let mtkSubmesh = submesh.mtkSubmesh
                     renderEncoder.drawIndexedPrimitives(type: .triangle,

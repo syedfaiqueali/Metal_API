@@ -30,73 +30,27 @@
  */
 
 
-#ifndef Common_h
-#define Common_h
+import UIKit
 
-#import <simd/simd.h>
+class LocalViewController: UIViewController {}
 
-typedef struct {
-    matrix_float4x4 modelMatrix;
-    matrix_float4x4 viewMatrix;
-    matrix_float4x4 projectionMatrix;
-    matrix_float3x3 normalMatrix;
-} Uniforms;
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
-typedef enum {
-    unused = 0,
-    Sunlight = 1,
-    Spotlight = 2,
-    Pointlight = 3,
-    Ambientlight = 4
-} LightType;
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    return true
+  }
 
-typedef struct {
-    vector_float3 position;
-    vector_float3 color;
-    vector_float3 specularColor;
-    float intensity;
-    vector_float3 attenuation;
-    LightType type;
-    float coneAngle;
-    vector_float3 coneDirection;
-    float coneAttenuation;
-} Light;
+  func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+  }
+}
 
-typedef struct {
-    uint lightCount;
-    vector_float3 cameraPosition;
-    uint tiling;
-} FragmentUniforms;
-
-typedef enum {
-    Position = 0,
-    Normal = 1,
-    UV = 2,
-    Tangent = 3,
-    Bitangent = 4
-} Attributes;
-
-typedef enum {
-    BaseColorTexture = 0,
-    NormalTexture = 1
-} Textures;
-
-typedef enum {
-    BufferIndexVertices = 0,
-    BufferIndexUniforms = 11,
-    BufferIndexLights = 12,
-    BufferIndexFragmentUniforms = 13,
-    BufferIndexMaterials = 14
-} BufferIndices;
-
-typedef struct {
-    vector_float3 baseColor;
-    vector_float3 specularColor;
-    float roughness;
-    float metallic;
-    vector_float3 ambientOcclusion;
-    float shininess;
-    
-} Material;
-
-#endif /* Common_h */
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+  
+  var window: UIWindow?
+  
+  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    guard let _ = (scene as? UIWindowScene) else { return }
+  }
+}

@@ -30,73 +30,38 @@
  */
 
 
-#ifndef Common_h
-#define Common_h
+#include <metal_stdlib>
+using namespace metal;
+#import "../Common.h"
 
-#import <simd/simd.h>
+struct VertexIn {
+  float4 position [[attribute(Position)]];
+  float3 normal [[attribute(Normal)]];
+  float2 uv [[attribute(UV)]];
+  float3 tangent [[attribute(Tangent)]];
+  float3 bitangent [[attribute(Bitangent)]];
+};
 
-typedef struct {
-    matrix_float4x4 modelMatrix;
-    matrix_float4x4 viewMatrix;
-    matrix_float4x4 projectionMatrix;
-    matrix_float3x3 normalMatrix;
-} Uniforms;
+struct VertexOut {
+  float4 position [[position]];
+  float3 worldPosition;
+  float3 worldNormal;
+  float3 worldTangent;
+  float3 worldBitangent;
+  float2 uv;
+};
 
-typedef enum {
-    unused = 0,
-    Sunlight = 1,
-    Spotlight = 2,
-    Pointlight = 3,
-    Ambientlight = 4
-} LightType;
-
-typedef struct {
-    vector_float3 position;
-    vector_float3 color;
-    vector_float3 specularColor;
-    float intensity;
-    vector_float3 attenuation;
-    LightType type;
-    float coneAngle;
-    vector_float3 coneDirection;
-    float coneAttenuation;
-} Light;
-
-typedef struct {
-    uint lightCount;
-    vector_float3 cameraPosition;
-    uint tiling;
-} FragmentUniforms;
-
-typedef enum {
-    Position = 0,
-    Normal = 1,
-    UV = 2,
-    Tangent = 3,
-    Bitangent = 4
-} Attributes;
-
-typedef enum {
-    BaseColorTexture = 0,
-    NormalTexture = 1
-} Textures;
-
-typedef enum {
-    BufferIndexVertices = 0,
-    BufferIndexUniforms = 11,
-    BufferIndexLights = 12,
-    BufferIndexFragmentUniforms = 13,
-    BufferIndexMaterials = 14
-} BufferIndices;
-
-typedef struct {
-    vector_float3 baseColor;
-    vector_float3 specularColor;
-    float roughness;
-    float metallic;
-    vector_float3 ambientOcclusion;
-    float shininess;
-    
-} Material;
-
-#endif /* Common_h */
+vertex VertexOut vertex_main(const VertexIn vertexIn [[stage_in]],
+                             constant Uniforms &uniforms [[buffer(BufferIndexUniforms)]])
+{
+  VertexOut out {
+    .position = uniforms.projectionMatrix * uniforms.viewMatrix
+    * uniforms.modelMatrix * vertexIn.position,
+    .worldPosition = (uniforms.modelMatrix * vertexIn.position).xyz,
+    .worldNormal = uniforms.normalMatrix * vertexIn.normal,
+    .worldTangent = uniforms.normalMatrix * vertexIn.tangent,
+    .worldBitangent = uniforms.normalMatrix * vertexIn.bitangent,
+    .uv = vertexIn.uv
+  };
+  return out;
+}

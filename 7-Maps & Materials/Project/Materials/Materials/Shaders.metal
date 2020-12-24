@@ -71,20 +71,32 @@ fragment float4 fragment_main(VertexOut in [[stage_in]],
                               texture2d<float> normalTexture [[ texture(NormalTexture)]],
                               sampler textureSampler [[sampler(0)]],
                               constant Light *lights [[buffer(BufferIndexLights)]],
-                              constant FragmentUniforms &fragmentUniforms [[buffer(BufferIndexFragmentUniforms)]]) {
-    float3 baseColor = baseColorTexture.sample(textureSampler,
+                              constant FragmentUniforms &fragmentUniforms [[buffer(BufferIndexFragmentUniforms)]],
+                              constant Material &material [[buffer(BufferIndexMaterials)]]) {
+    
+    /*float3 baseColor = baseColorTexture.sample(textureSampler,
                                                in.uv * fragmentUniforms.tiling).rgb;
+     */
+    float3 baseColor = material.baseColor;
+    float materialShininess = material.shininess;
+    float3 materialSpecularColor = material.specularColor;
+    
     float3 normalValue = normalTexture.sample(textureSampler,
                                               in.uv * fragmentUniforms.tiling).xyz;
     normalValue = normalize(normalValue);
+    normalValue = normalValue * 2 -1;
     
     float3 diffuseColor = 0;
     float3 ambientColor = 0;
     float3 specularColor = 0;
-    float materialShininess = 64;
-    float3 materialSpecularColor = float3(0.4, 0.4, 0.4);
+    //float materialShininess = 64;
+    //float3 materialSpecularColor = float3(0.4, 0.4, 0.4);
     
-    float3 normalDirection = normalize(in.worldNormal);
+    float3 normalDirection = float3x3(in.worldTangent,
+                                      in.worldBitangent,
+                                      in.worldNormal) * normalValue;
+    normalDirection = normalize(normalDirection);
+    
     for (uint i = 0; i < fragmentUniforms.lightCount; i++) {
         Light light = lights[i];
         if (light.type == Sunlight) {
