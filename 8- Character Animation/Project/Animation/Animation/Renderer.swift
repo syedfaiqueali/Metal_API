@@ -42,7 +42,11 @@ class Renderer: NSObject {
     let depthStencilState: MTLDepthStencilState
     let lighting = Lighting()
     
+    //Proceduaral animations
     var currentTime: Float = 0
+    
+    //animation using physics
+    var ballVeclocity: Float = 0
     
     lazy var camera: Camera = {
         let camera = ArcballCamera()
@@ -77,7 +81,7 @@ class Renderer: NSObject {
         
         // models
         let ball = Model(name: "beachball.usda")
-        ball.position = [0, 0.35, 0]
+        ball.position = [0, 3, 0]
         ball.scale = [100, 100, 100]
         models.append(ball)
         let ground = Model(name: "ground.obj")
@@ -149,6 +153,23 @@ extension Renderer: MTKViewDelegate {
     func update(deltaTime: Float) {
         currentTime += deltaTime * 4
         let ball = models[0]
-        ball.position.x = sin(currentTime)
+        //ball.position.x = sin(currentTime)
+        let gravity: Float = 9.8
+        let mass: Float = 0.05
+        let acceleration = gravity/mass  //F=ma => a=F(gravity)/m
+        let airFriction: Float = 0.2
+        let bounciness: Float = 0.9
+        let timeStep: Float = 1/600
+        
+        /**Calculate the position of the ball based on the ball's cuurent velocity.
+           The ball's origin is in the center, approx 0.7 units in diameter, so when
+           ball's center is 0.35 units above the ground, that's when you reverse the
+           velocity and travel upward.*/
+        ballVeclocity += (acceleration * timeStep) / airFriction
+        ball.position.y -= ballVeclocity * timeStep
+        if ball.position.y <= 0.35 {  //collision with ground
+            ball.position.y = 0.35
+            ballVeclocity = ballVeclocity * -1 * bounciness
+        }
     }
 }
