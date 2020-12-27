@@ -154,12 +154,14 @@ extension Renderer: MTKViewDelegate {
     
     //To update objects everyframe
     func update(deltaTime: Float) {
-        currentTime += deltaTime * 4
+        currentTime += deltaTime
         let ball = models[0]
         let animation = Animation()
         animation.translations = generateBallTranslations()
-        ball.position = animation.getTranslation(time: currentTime) ?? [0,0,0]
-        ball.position.y += ball.size.y
+        animation.rotations = generateBallRotations()
+        ball.position = animation.getTranslation(time: currentTime) ?? float3(0)
+        ball.position.y += ball.size.y / 2
+        ball.quaternion = animation.getRotation(at: currentTime) ?? simd_quatf()
         
         //calculate current frame working on a 60fps
         let fps = Float(60)
